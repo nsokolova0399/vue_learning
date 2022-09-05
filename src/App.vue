@@ -1,7 +1,8 @@
 <template>
     <div class="app">
         <h1>Страница с постами</h1>
-        <my-button @click="showDialog">Создать пост</my-button>
+        <my-button @click="fetchPosts">Получить посты</my-button>
+        <my-button @click="showDialog" style="margin: 15px 0;">Создать пост</my-button>
         <my-dialog v-model:show="dialogVisible">
             <post-form
                 @create="createPost"
@@ -18,22 +19,16 @@
 <script>
     import PostForm from "@/components/PostForm";
     import PostList from "@/components/PostList";
-    import MyDialog from "@/components/UI/MyDialog";
-    import MyButton from "@/components/UI/MyButton";
+    import axios from "axios";
     export default {
         components:{
-            MyButton,
-            MyDialog,
             PostForm, PostList
         },
         data(){
             return{
-                posts: [
-                    {id: 1, title: 'JavaScript 1', body: 'Описание поста'},
-                    {id: 2, title: 'JavaScript 2', body: 'Описание поста'},
-                    {id: 3, title: 'JavaScript 3', body: 'Описание поста'},
-                ],
+                posts: [],
                 dialogVisible: false,
+                modificatorValue:''
             }
         },
         methods:{
@@ -46,6 +41,15 @@
             },
             showDialog(){
                 this.dialogVisible=true;
+            },
+            //будем заимодейстровать с сервером, используя библиотеку аксиос
+            async fetchPosts(){
+                try{
+                    const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+                    this.posts = response.data;
+                }catch(e){
+                    alert('Ошибка');
+                }
             }
         },
     }
