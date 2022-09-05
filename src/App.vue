@@ -1,7 +1,6 @@
 <template>
     <div class="app">
         <h1>Страница с постами</h1>
-        <my-button @click="fetchPosts">Получить посты</my-button>
         <my-button @click="showDialog" style="margin: 15px 0;">Создать пост</my-button>
         <my-dialog v-model:show="dialogVisible">
             <post-form
@@ -12,7 +11,9 @@
         <post-list
                 :posts="posts"
                 @remove="removePost"
+                v-if="!isPostsLoading"
         />
+        <div v-else>Идет загрузка...</div>
     </div>
 </template>
 
@@ -28,7 +29,7 @@
             return{
                 posts: [],
                 dialogVisible: false,
-                modificatorValue:''
+                isPostsLoading: false,
             }
         },
         methods:{
@@ -45,13 +46,23 @@
             //будем заимодейстровать с сервером, используя библиотеку аксиос
             async fetchPosts(){
                 try{
-                    const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
-                    this.posts = response.data;
+                    //имитация загрузки
+                    this.isPostsLoading = true;
+                    //сделаем так, чтобы пользователь видел подгрузку страниц (искуственно)
+                    setTimeout(async () => {
+                        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+                        this.posts = response.data;
+                    }, 1000)
                 }catch(e){
                     alert('Ошибка');
+                } finally{
+                    this.isPostsLoading = false;
                 }
             }
         },
+        mounted() {
+            this.fetchPosts();
+        }
     }
 </script>
 
