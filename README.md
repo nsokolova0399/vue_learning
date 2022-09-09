@@ -1,19 +1,4 @@
-# vue_learning
+# Приложение-изучение Vue
+## https://learinig-vue-1.netlify.app/ (тут можно посмотреть как выглядит)
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Сайт основан на примерах документации Vue 3 и видеоуроках из YouTube. Поэтому в проекте есть базовые принципы работы с Vue3 (двустороннее связывание, переиспользованный UI компонент(кнопки, модальное окно, input) и т д)
