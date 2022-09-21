@@ -6,8 +6,12 @@
             <div><strong>Описание:</strong> {{ post.body }}</div>
         </div>
         <div class="post__btns">
-            <my-button class="Del"
-            @click="$emit('remove', post)"
+            <my-button class="btns"
+                       style="margin-right: 20px"
+                       @click="$router.push(`/posts/${post.id}`)"
+            >Открыть</my-button>
+            <my-button class="btns"
+                       @click="$emit('remove', post)"
             >Удалить</my-button>
         </div>
     </div>
@@ -37,10 +41,12 @@
         padding: 10px;
     }
     .post__btns{
-        margin-left: auto;
-        margin-top: auto;
-        margin-bottom: auto;
-        margin-right: 10px;
+        margin: 15px 15px 15px;
+        display: inline-flex;
+    }
+    .btns{
+        height: 40px;
+        border-color: rgba(0, 128, 128, 0.64);
     }
 
 </style>
